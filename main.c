@@ -2,8 +2,8 @@
 
 #include "./header_files/read.h"
 
-int main() {
-  read_graph();
+int main(int argc, char *argv[]) {
+  read_graph(argv[1]);
 
   return 0;
 }
