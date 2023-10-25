@@ -1,9 +1,28 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "./header_files/read.h"
+#include "./header_files/input.h"
+#include "./header_files/output.h"
 
 int main(int argc, char *argv[]) {
-  read_graph(argv[1]);
+  FILE *file = fopen(argv[1], "r");
+
+  if(file == NULL) {
+    printf("Error opening the file.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  Graph graph = read_graph(file);
+
+  fclose(file);
+
+  generate_graph_info(graph.adj_matrix, graph.n, graph.m);
+
+  for(int i=0; i<graph.n; i++) {
+    free(graph.adj_matrix[i]);
+  }
+
+  free(graph.adj_matrix);
 
   return 0;
 }
