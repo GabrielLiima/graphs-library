@@ -1,9 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../header_files/output.h"
 
 void generate_graph_info(char** adj_matrix, int n, int m) {
-  FILE *file = fopen("output.txt", "w");
+  FILE *file = fopen("./outputs/output.txt", "w");
+
+  if(file == NULL) {
+    printf("Error creating output file.\n");
+    exit(EXIT_FAILURE);
+  }
 
   fprintf(file, "# n = %d\n", n);
   fprintf(file, "# m = %d\n", m);
