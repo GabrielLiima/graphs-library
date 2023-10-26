@@ -3,8 +3,10 @@
 #include "../header_files/output.h"
 
 void generate_graph_info(char** adj_matrix, int n, int m) {
-  printf("# n = %d\n", n);
-  printf("# m = %d\n", m);
+  FILE *file = fopen("output.txt", "w");
+
+  fprintf(file, "# n = %d\n", n);
+  fprintf(file, "# m = %d\n", m);
 
   int degree = 0;
 
@@ -17,7 +19,9 @@ void generate_graph_info(char** adj_matrix, int n, int m) {
       }
     }
 
-    printf("%d %d\n", i+1, degree);
+    fprintf(file, "%d %d\n", i+1, degree);
     degree = 0;
   }
+
+  fclose(file);
 }
