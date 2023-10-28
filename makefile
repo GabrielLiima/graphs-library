@@ -32,8 +32,12 @@ $(OBJDIR)/main.o: main.c
 $(OBJDIR)/%.o: $(MODULESDIR)/%.c $(HEADERDIR)/%.h
 	cc $(CFLAGS) -c $< -o $@
 
+debug:
+	@ echo "Compilando com a flag de depuração"
+	cc -g main.c $(wildcard modules/*.c)
+
 .PHONY: clean
 
 clean:
-	rm $(BINDIR)/* $(OBJDIR)/* $(OUTDIR)/*
+	rm $(BINDIR)/* $(OBJDIR)/*
 	rmdir $(BINDIR) $(OBJDIR)
