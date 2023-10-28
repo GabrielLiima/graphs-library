@@ -18,13 +18,13 @@ int main(int argc, char *argv[]) {
 
   fclose(file);
 
-  // generate_graph_info(graph.adj_matrix, graph.n, graph.m);
+  generate_graph_info(&graph, 2);
   
-  // for(int i=0; i<graph.n; i++) {
-  //   deleteList(graph.adj_list[i]);
-  // }
+  for(int i=0; i<graph.n; i++) {
+    deleteList(graph.adj_list[i]);
+  }
 
-  // free(graph.adj_list);
+  free(graph.adj_list);
 
   // for(int i=0; i<graph.n; i++) {
   //   free(graph.adj_matrix[i]);

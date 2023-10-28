@@ -64,11 +64,30 @@ void read_graph(Graph* graph, FILE *file, int option) {
     rewind(file);
 
     graph->adj_list = adj_list;
-
-    for(int i=0; i<n; i++) {
-      printList(adj_list[i]->head);
-    }
   }
 
   graph->m = m;
+}
+
+void print_adj_matrix(char** adj_matrix, int n) {
+  for(int i=0; i<n; i++) {
+    
+    for(int j=0; j<n; j++) {
+
+      if(adj_matrix[i][j] == '\0') {
+        printf("[%d][%d] = 0\n", i+1, j+1);
+
+      } else {
+        printf("[%d][%d] = %c\n", i+1, j+1, adj_matrix[i][j]);
+      }
+    }
+  }
+}
+
+void print_adj_list(List** adj_list, int n) {
+  for(int i=0; i<n; i++) {
+    printf("%d: ", i+1);
+
+    printList(adj_list[i]->head);
+  }
 }

@@ -3,7 +3,7 @@
 
 #include "../header_files/output.h"
 
-void generate_graph_info(char** adj_matrix, int n, int m) {
+void generate_graph_info(Graph* graph, int option) {
   FILE *file = fopen("./outputs/output.txt", "w");
 
   if(file == NULL) {
@@ -11,22 +11,30 @@ void generate_graph_info(char** adj_matrix, int n, int m) {
     exit(EXIT_FAILURE);
   }
 
-  fprintf(file, "# n = %d\n", n);
-  fprintf(file, "# m = %d\n", m);
+  fprintf(file, "# n = %d\n", graph->n);
+  fprintf(file, "# m = %d\n", graph->m);
 
   int degree = 0;
 
-  for(int i=0; i<n; i++) {
+  if(option == 1) {
 
-    for(int j=0; j<n; j++) {
+    for(int i=0; i<graph->n; i++) {
 
-      if(adj_matrix[i][j] == '1' || adj_matrix[j][i] == '1') {
-        degree++;
+      for(int j=0; j<graph->n; j++) {
+
+        if(graph->adj_matrix[i][j] == '1' || graph->adj_matrix[j][i] == '1') {
+          degree++;
+        }
       }
+
+      fprintf(file, "%d %d\n", i+1, degree);
+      degree = 0;
     }
 
-    fprintf(file, "%d %d\n", i+1, degree);
-    degree = 0;
+  } else if(option == 2) {
+    for(int i=0; i<graph->n; i++) {
+      fprintf(file, "%d %d\n", i+1, graph->adj_list[i]->size);
+    }
   }
 
   fclose(file);
