@@ -45,3 +45,14 @@ char* int_to_char(int num) {
 
   return str;
 }
+
+int char_to_int(char* str) {
+  int result = 0;
+
+  while(*str != '\0') {
+    result = result * 10 + (*str - '0');
+    str++;
+  }
+
+  return result;
+}

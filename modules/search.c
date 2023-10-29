@@ -1,26 +1,26 @@
 #include <stdlib.h>
 
 #include "../header_files/search.h"
+#include "../header_files/utils.h"
 
 void bfs(Graph* graph, int start) {
   List* queue = createList(constructor_char, destructor_char);
 
-  char* visited = (char*)malloc(graph->n * sizeof(char));
+  char* visited = (char*)calloc(graph->n, sizeof(char));
 
   visited[start-1] = '1';
 
-  char node = '0' + start;
-  append(queue, &node);
+  append(queue, int_to_char(start));
 
-  char* parent = (char*)malloc(graph->n * sizeof(char));
+  char** parent = (char**)calloc(graph->n, sizeof(char*));
 
   while(queue->size != 0) {
-    char current_vertex_char = *(queue->head->data);
-    int current_vertex_int = current_vertex_char - '0';
+    char* current_vertex_char = queue->head->data;
+    int current_vertex_int = char_to_int(current_vertex_char);
 
     deleteHead(queue);
 
-    printf("%c -> ", current_vertex_char);
+    printf("%d -> ", current_vertex_int);
 
     for(int i=1; i<=graph->n; i++) {
 
@@ -28,8 +28,7 @@ void bfs(Graph* graph, int start) {
         visited[i-1] = '1';
         parent[i-1] = current_vertex_char;
 
-        char vertex = '0' + i;
-        append(queue, &vertex);
+        append(queue, int_to_char(i));
       }
     }
   }

@@ -21,9 +21,9 @@ int main(int argc, char *argv[]) {
 
   // print_adj_list(graph.adj_list, graph.n);
 
-  // bfs(&graph, 1);
+  bfs(&graph, 1);
 
-  generate_graph_info(&graph, 1);
+  // generate_graph_info(&graph, 1);
 
   // print_adj_matrix(graph.adj_matrix, graph.n);
   
