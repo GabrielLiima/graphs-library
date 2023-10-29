@@ -1,17 +1,21 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "../header_files/input.h"
+#include "../header_files/utils.h"
 
-static char* constructor_char(char* data) {
-  char* p = malloc(sizeof(char));
-  memcpy(p, data, sizeof(char));
+char* constructor_char(char* data) {
+  int n = len(data);
+
+  char* p = malloc(n * sizeof(char));
+  memcpy(p, data, n * sizeof(char));
+
+  free(data);
 
   return p;
 }
 
-static void destructor_char(char* data) {
+void destructor_char(char* data) {
   free(data);
 }
 
@@ -47,17 +51,17 @@ void read_graph(Graph* graph, FILE *file, int option) {
 
     for(int i=0; i<n; i++) {
       adj_list[i] = createList(constructor_char, destructor_char);
-    }
-
-    char value = ' ';  
+    }  
 
     while(fscanf(file, "%d %d", &e1, &e2) != EOF) {
-      value = '0' + e2;
-      append(adj_list[e1-1], &value);
+      char* aux = int_to_char(e2);
 
-      value = '0' + e1;
-      append(adj_list[e2-1], &value);
+      if(!isInList(adj_list[e1-1], aux)) {
+        append(adj_list[e1-1], int_to_char(e2));
+        append(adj_list[e2-1], int_to_char(e1));  
+      }
       
+      free(aux);
       m++;
     }
 

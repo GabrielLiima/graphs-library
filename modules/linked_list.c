@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "../header_files/linked_list.h"
 
@@ -50,7 +51,7 @@ void printList(Node* n) {
 
   while(n != NULL) {
     data = n->data;
-    printf("%c ", *data);
+    printf("%s ", data);
     
     n = n->next;
   }
@@ -58,7 +59,7 @@ void printList(Node* n) {
   printf("\n");
 }
 
-static void deleteHead(List* l) {
+void deleteHead(List* l) {
   Node* aux = l->head;
 
   if(l->size == 1) {
@@ -78,4 +79,18 @@ void deleteList(List* l) {
   }
 
   free(l);
+}
+
+int isInList(List* l, char* n) {
+  Node* cur = l->head;
+
+  while(cur != NULL) {
+    if(strcmp(cur->data, n) == 0) {
+      return 1;
+    }
+
+    cur = cur->next;
+  }
+
+  return 0;
 }

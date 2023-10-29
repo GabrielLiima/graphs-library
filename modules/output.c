@@ -22,7 +22,7 @@ void generate_graph_info(Graph* graph, int option) {
 
       for(int j=0; j<graph->n; j++) {
 
-        if(graph->adj_matrix[i][j] == '1' || graph->adj_matrix[j][i] == '1') {
+        if(graph->adj_matrix[i][j] == '1') {
           degree++;
         }
       }

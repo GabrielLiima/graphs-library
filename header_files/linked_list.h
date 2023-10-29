@@ -21,5 +21,6 @@ List* createList(constructor_fn constructor, destructor_fn destructor);
 void append(List* l, char* data);
 void printList(Node* n);
 void deleteList(List* l);
+int isInList(List* l, char* n);
 
 #endif
