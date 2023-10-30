@@ -54,15 +54,15 @@ void read_graph(Graph* graph, FILE *file, int option) {
 
     while(fscanf(file, "%d %d", &e1, &e2) != EOF) {
       char* aux = int_to_char(e2);
+      char* aux2 = int_to_char(e1);
 
       if(!isInList(adj_list[e1-1], aux)) {
         append(adj_list[e1-1], aux);
-        free(aux);
-
-        aux = int_to_char(e1);
-        append(adj_list[e2-1], aux);  
-        free(aux);
+        append(adj_list[e2-1], aux2);  
       }
+
+      free(aux);
+      free(aux2);
       
       m++;
     }

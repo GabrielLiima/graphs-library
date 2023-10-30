@@ -32,7 +32,7 @@ void bfs(Graph* graph, int start) {
           parent[i-1] = current_vertex_char;
 
           char* i_char = int_to_char(i);
-          append(queue, int_to_char(i));
+          append(queue, i_char);
           free(i_char);
         } 
       }
@@ -44,7 +44,6 @@ void bfs(Graph* graph, int start) {
         if(visited[char_to_int(cur->data)-1] != '1') {
           visited[char_to_int(cur->data)-1] = '1';
           parent[char_to_int(cur->data)-1] = current_vertex_char;
-
           
           append(queue, cur->data);
         }
