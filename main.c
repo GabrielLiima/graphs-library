@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
   Graph graph;
   
-  read_graph(&graph, file, 1);
+  read_graph(&graph, file, 2);
 
   fclose(file);
 
@@ -23,21 +23,21 @@ int main(int argc, char *argv[]) {
 
   bfs(&graph, 1);
 
-  // generate_graph_info(&graph, 1);
+  generate_graph_info(&graph);
 
   // print_adj_matrix(graph.adj_matrix, graph.n);
   
-  // for(int i=0; i<graph.n; i++) {
-  //   deleteList(graph.adj_list[i]);
-  // }
-
-  // free(graph.adj_list);
-
   for(int i=0; i<graph.n; i++) {
-    free(graph.adj_matrix[i]);
+    deleteList(graph.adj_list[i]);
   }
 
-  free(graph.adj_matrix);
+  free(graph.adj_list);
+
+  // for(int i=0; i<graph.n; i++) {
+  //   free(graph.adj_matrix[i]);
+  // }
+
+  // free(graph.adj_matrix);
 
   return 0;
 }

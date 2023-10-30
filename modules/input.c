@@ -10,8 +10,6 @@ char* constructor_char(char* data) {
   char* p = malloc(n * sizeof(char));
   memcpy(p, data, n * sizeof(char));
 
-  free(data);
-
   return p;
 }
 
@@ -45,6 +43,7 @@ void read_graph(Graph* graph, FILE *file, int option) {
     rewind(file);
 
     graph->adj_matrix = adj_matrix;
+    graph->adj_list = NULL;
 
   } else if(option == 2) {
     List** adj_list = (List**)malloc(n * sizeof(List*));
@@ -57,17 +56,21 @@ void read_graph(Graph* graph, FILE *file, int option) {
       char* aux = int_to_char(e2);
 
       if(!isInList(adj_list[e1-1], aux)) {
-        append(adj_list[e1-1], int_to_char(e2));
-        append(adj_list[e2-1], int_to_char(e1));  
+        append(adj_list[e1-1], aux);
+        free(aux);
+
+        aux = int_to_char(e1);
+        append(adj_list[e2-1], aux);  
+        free(aux);
       }
       
-      free(aux);
       m++;
     }
 
     rewind(file);
 
     graph->adj_list = adj_list;
+    graph->adj_matrix = NULL;
   }
 
   graph->m = m;

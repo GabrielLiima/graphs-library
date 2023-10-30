@@ -3,6 +3,6 @@
 
 #include "./input.h"
 
-void generate_graph_info(Graph* graph, int option);
+void generate_graph_info(Graph* graph);
 
 #endif

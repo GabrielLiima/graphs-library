@@ -10,7 +10,9 @@ void bfs(Graph* graph, int start) {
 
   visited[start-1] = '1';
 
-  append(queue, int_to_char(start));
+  char* start_char = int_to_char(start);
+  append(queue, start_char);
+  free(start_char);
 
   char** parent = (char**)calloc(graph->n, sizeof(char*));
 
@@ -22,13 +24,32 @@ void bfs(Graph* graph, int start) {
 
     printf("%d -> ", current_vertex_int);
 
-    for(int i=1; i<=graph->n; i++) {
+    if(graph->adj_matrix != NULL) {
+      for(int i=1; i<=graph->n; i++) {
 
-      if(graph->adj_matrix[current_vertex_int-1][i-1] == '1' && visited[i-1] != '1') {
-        visited[i-1] = '1';
-        parent[i-1] = current_vertex_char;
+        if(graph->adj_matrix[current_vertex_int-1][i-1] == '1' && visited[i-1] != '1') {
+          visited[i-1] = '1';
+          parent[i-1] = current_vertex_char;
 
-        append(queue, int_to_char(i));
+          char* i_char = int_to_char(i);
+          append(queue, int_to_char(i));
+          free(i_char);
+        } 
+      }
+
+    } else if(graph->adj_list != NULL) {
+      Node* cur = graph->adj_list[current_vertex_int-1]->head;
+
+      while(cur != NULL) {
+        if(visited[char_to_int(cur->data)-1] != '1') {
+          visited[char_to_int(cur->data)-1] = '1';
+          parent[char_to_int(cur->data)-1] = current_vertex_char;
+
+          
+          append(queue, cur->data);
+        }
+
+        cur = cur->next;
       }
     }
   }

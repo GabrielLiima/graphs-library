@@ -3,7 +3,7 @@
 
 #include "../header_files/output.h"
 
-void generate_graph_info(Graph* graph, int option) {
+void generate_graph_info(Graph* graph) {
   FILE *file = fopen("./outputs/output.txt", "w");
 
   if(file == NULL) {
@@ -16,7 +16,7 @@ void generate_graph_info(Graph* graph, int option) {
 
   int degree = 0;
 
-  if(option == 1) {
+  if(graph->adj_matrix != NULL) {
 
     for(int i=0; i<graph->n; i++) {
 
@@ -31,7 +31,7 @@ void generate_graph_info(Graph* graph, int option) {
       degree = 0;
     }
 
-  } else if(option == 2) {
+  } else if(graph->adj_list != NULL) {
     for(int i=0; i<graph->n; i++) {
       fprintf(file, "%d %d\n", i+1, graph->adj_list[i]->size);
     }
