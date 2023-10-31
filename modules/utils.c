@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "../header_files/utils.h"
 
@@ -15,6 +16,8 @@ int len(char* str) {
 
 char* int_to_char(int num) {
   int i = 0;
+
+  // Change this to len()
   int aux = num;
 
   while(aux > 0) {
@@ -55,4 +58,17 @@ int char_to_int(char* str) {
   }
 
   return result;
+}
+
+char* constructor_char(char* data) {
+  int n = len(data);
+
+  char* p = malloc(n * sizeof(char));
+  memcpy(p, data, n * sizeof(char));
+
+  return p;
+}
+
+void destructor_char(char* data) {
+  free(data);
 }

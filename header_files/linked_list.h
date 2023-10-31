@@ -22,5 +22,6 @@ void append(List* l, char* data);
 void printList(Node* n);
 void deleteList(List* l);
 int isInList(List* l, char* n);
+void deleteHead(List* l);
 
 #endif

@@ -1,23 +1,19 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "../header_files/input.h"
 #include "../header_files/utils.h"
+#include "../header_files/output.h"
 
-char* constructor_char(char* data) {
-  int n = len(data);
+void read_graph(char* filename, Graph* graph, int option) {
+  FILE *file = fopen(filename, "r");
 
-  char* p = malloc(n * sizeof(char));
-  memcpy(p, data, n * sizeof(char));
+  if(file == NULL) {
+    printf("Error opening the file.\n");
+    exit(EXIT_FAILURE);
+  }
 
-  return p;
-}
-
-void destructor_char(char* data) {
-  free(data);
-}
-
-void read_graph(Graph* graph, FILE *file, int option) {
   int n;
   fscanf(file, "%d", &n);
 
@@ -39,8 +35,6 @@ void read_graph(Graph* graph, FILE *file, int option) {
       
       m++;
     }
-
-    rewind(file);
 
     graph->adj_matrix = adj_matrix;
     graph->adj_list = NULL;
@@ -67,34 +61,13 @@ void read_graph(Graph* graph, FILE *file, int option) {
       m++;
     }
 
-    rewind(file);
-
     graph->adj_list = adj_list;
     graph->adj_matrix = NULL;
   }
 
   graph->m = m;
-}
 
-void print_adj_matrix(char** adj_matrix, int n) {
-  for(int i=0; i<n; i++) {
-    
-    for(int j=0; j<n; j++) {
+  fclose(file);
 
-      if(adj_matrix[i][j] == '\0') {
-        printf("[%d][%d] = 0\n", i+1, j+1);
-
-      } else {
-        printf("[%d][%d] = %c\n", i+1, j+1, adj_matrix[i][j]);
-      }
-    }
-  }
-}
-
-void print_adj_list(List** adj_list, int n) {
-  for(int i=0; i<n; i++) {
-    printf("%d: ", i+1);
-
-    printList(adj_list[i]->head);
-  }
+  generate_graph_info(graph);
 }

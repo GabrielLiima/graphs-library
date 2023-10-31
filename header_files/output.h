@@ -4,5 +4,8 @@
 #include "./input.h"
 
 void generate_graph_info(Graph* graph);
+void generate_bfs_output(char** parent, char** height, int n);
+void print_adj_matrix(char** adj_matrix, int n);
+void print_adj_list(List** adj_list, int n);
 
 #endif
