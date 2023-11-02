@@ -40,8 +40,15 @@ void generate_graph_info(Graph* graph) {
   fclose(file);
 }
 
-void generate_bfs_output(char** parent, char** height, int n) {
-  FILE *file = fopen("./outputs/output_bfs.txt", "w");
+void generate_search_output(char** parent, char** height, int n, int option) {
+  FILE *file = NULL;
+
+  if(option == 1) {
+    file = fopen("./outputs/output_bfs.txt", "w");
+
+  } else if(option == 2) {
+    file = fopen("./outputs/output_dfs.txt", "w");
+  }
 
   if(file == NULL) {
     printf("Error creating output file.\n");
