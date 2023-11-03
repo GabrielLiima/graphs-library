@@ -43,14 +43,14 @@ void read_graph(char* filename, Graph* graph, int option) {
     List** adj_list = (List**)malloc(n * sizeof(List*));
 
     for(int i=0; i<n; i++) {
-      adj_list[i] = createList(constructor_char, destructor_char);
+      adj_list[i] = create_list(constructor_char, destructor_char);
     }  
 
     while(fscanf(file, "%d %d", &e1, &e2) != EOF) {
       char* aux = int_to_char(e2);
       char* aux2 = int_to_char(e1);
 
-      if(!isInList(adj_list[e1-1], aux)) {
+      if(!is_in_list(adj_list[e1-1], aux)) {
         append(adj_list[e1-1], aux);
         append(adj_list[e2-1], aux2);  
       }

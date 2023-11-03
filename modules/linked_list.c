@@ -19,7 +19,7 @@ static void deleteNode(Node* n, destructor_fn destructor) {
   free(n);
 }
 
-List* createList(constructor_fn constructor, destructor_fn destructor) {
+List* create_list(constructor_fn constructor, destructor_fn destructor) {
   List* l = malloc(sizeof(List));
 
   l->head = NULL;
@@ -46,7 +46,7 @@ void append(List* l, char* data) {
   l->size++;
 }
 
-void printList(Node* n) {
+void print_list(Node* n) {
   char* data = NULL;
 
   while(n != NULL) {
@@ -59,7 +59,7 @@ void printList(Node* n) {
   printf("\n");
 }
 
-void deleteHead(List* l) {
+void delete_head(List* l) {
   Node* aux = l->head;
 
   if(l->size == 1) {
@@ -72,16 +72,16 @@ void deleteHead(List* l) {
   l->size--;
 }
 
-void deleteList(List* l) {
+void delete_list(List* l) {
 
   while(l->size > 0) {
-    deleteHead(l);
+    delete_head(l);
   }
 
   free(l);
 }
 
-int isInList(List* l, char* n) {
+int is_in_list(List* l, char* n) {
   Node* cur = l->head;
 
   while(cur != NULL) {

@@ -9,11 +9,11 @@ int main(int argc, char *argv[]) {
   
   read_graph(argv[1], &graph, 2);
 
-  bfs(&graph, 1);
-  dfs(&graph, 1);
+  search(&graph, 1, 1);
+  search(&graph, 1, 2);
   
   for(int i=0; i<graph.n; i++) {
-    deleteList(graph.adj_list[i]);
+    delete_list(graph.adj_list[i]);
   }
 
   free(graph.adj_list);

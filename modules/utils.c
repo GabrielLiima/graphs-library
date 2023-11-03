@@ -17,7 +17,6 @@ int len(char* str) {
 char* int_to_char(int num) {
   int i = 0;
 
-  // Change this to len()
   int aux = num;
 
   while(aux > 0) {

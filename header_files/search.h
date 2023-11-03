@@ -3,7 +3,6 @@
 
 #include "./input.h"
 
-void bfs(Graph* graph, int start);
-void dfs(Graph* graph, int start);
+void search(Graph* graph, int start, int option);
 
 #endif

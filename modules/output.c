@@ -81,6 +81,6 @@ void print_adj_list(List** adj_list, int n) {
   for(int i=0; i<n; i++) {
     printf("%d: ", i+1);
 
-    printList(adj_list[i]->head);
+    print_list(adj_list[i]->head);
   }
 }

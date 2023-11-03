@@ -17,11 +17,11 @@ typedef struct List {
   destructor_fn destructor;
 } List;
 
-List* createList(constructor_fn constructor, destructor_fn destructor);
+List* create_list(constructor_fn constructor, destructor_fn destructor);
+void print_list(Node* n);
+void delete_list(List* l);
 void append(List* l, char* data);
-void printList(Node* n);
-void deleteList(List* l);
-int isInList(List* l, char* n);
-void deleteHead(List* l);
+void delete_head(List* l);
+int is_in_list(List* l, char* n);
 
 #endif
