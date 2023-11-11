@@ -62,8 +62,10 @@ int char_to_int(char* str) {
 char* constructor_char(char* data) {
   int n = len(data);
 
-  char* p = malloc(n * sizeof(char));
+  char* p = malloc((n+1) * sizeof(char));
   memcpy(p, data, n * sizeof(char));
+
+  p[n] = '\0';
 
   return p;
 }

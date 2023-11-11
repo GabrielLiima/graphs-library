@@ -19,6 +19,11 @@ void read_graph(char* filename, Graph* graph, int option) {
 
   graph->n = n;
 
+  if(graph->n == 0) {
+    fclose(file);
+    return;
+  }
+
   int e1, e2;
   int m = 0;
 
