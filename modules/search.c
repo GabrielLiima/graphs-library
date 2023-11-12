@@ -5,6 +5,14 @@
 #include "../header_files/utils.h"
 #include "../header_files/output.h"
 
+/**
+ * @brief Helper function for traversing a graph
+ * 
+ * @param graph pointer to a graph object
+ * @param search_info pointer to a search_info object
+ * @param start starting vertex
+ * @param search_type either 1 or 2: 1-bfs; 2-dfs
+ */
 static void search_helper(Graph* graph, SearchInfo* search_info, int start, int search_type) {
   search_info->visited[start-1] = '1';
 
@@ -72,6 +80,13 @@ static void search_helper(Graph* graph, SearchInfo* search_info, int start, int 
   }
 }
 
+/**
+ * @brief Traverse a graph using either bfs or dfs
+ * 
+ * @param graph pointer to a graph object
+ * @param start starting vertex
+ * @param option either 1 or 2: 1-bfs; 2-dfs
+ */
 void search(Graph* graph, int start, int option) {
   if(graph->n == 0) {
     return;
@@ -107,6 +122,11 @@ void search(Graph* graph, int start, int option) {
   free(search_info.height);
 }
 
+/**
+ * @brief Get the amount of connected components in a graph
+ * 
+ * @param graph pointer to a graph object
+ */
 void find_connected_components(Graph* graph) {
   if(graph->n == 0) {
     return;

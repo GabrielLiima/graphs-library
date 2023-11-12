@@ -4,6 +4,13 @@
 
 #include "../header_files/linked_list.h"
 
+/**
+ * @brief Create and initialize a node object
+ * 
+ * @param data string
+ * @param constructor string constructor function 
+ * @return Node* pointer to the node object
+ */
 static Node* createNode(char* data, constructor_fn constructor) {
   Node* new_node = malloc(sizeof(Node));
 
@@ -19,6 +26,13 @@ static void deleteNode(Node* n, destructor_fn destructor) {
   free(n);
 }
 
+/**
+ * @brief Create and initialize a list
+ * 
+ * @param constructor string constructor function
+ * @param destructor string destructor function
+ * @return List* pointer to the list object
+ */
 List* create_list(constructor_fn constructor, destructor_fn destructor) {
   List* l = malloc(sizeof(List));
 
@@ -32,6 +46,12 @@ List* create_list(constructor_fn constructor, destructor_fn destructor) {
   return l;
 }
 
+/**
+ * @brief Append a string to a list object
+ * 
+ * @param l pointer to a list object
+ * @param data string to be appended
+ */
 void append(List* l, char* data) {
   Node* new_node = createNode(data, l->constructor);
 
@@ -46,6 +66,11 @@ void append(List* l, char* data) {
   l->size++;
 }
 
+/**
+ * @brief Print a list object
+ * 
+ * @param n pointer to the starting node
+ */
 void print_list(Node* n) {
   char* data = NULL;
 
@@ -59,6 +84,11 @@ void print_list(Node* n) {
   printf("\n");
 }
 
+/**
+ * @brief Delete the list head
+ * 
+ * @param l pointer to a list object
+ */
 void delete_head(List* l) {
   Node* aux = l->head;
 
@@ -72,6 +102,11 @@ void delete_head(List* l) {
   l->size--;
 }
 
+/**
+ * @brief Delete a list object
+ * 
+ * @param l pointer to a list object
+ */
 void delete_list(List* l) {
 
   while(l->size > 0) {
@@ -81,6 +116,13 @@ void delete_list(List* l) {
   free(l);
 }
 
+/**
+ * @brief Check if a string is in a list
+ * 
+ * @param l pointer to a list object
+ * @param n string to be checked
+ * @return boolean value
+ */
 int is_in_list(List* l, char* n) {
   Node* cur = l->head;
 

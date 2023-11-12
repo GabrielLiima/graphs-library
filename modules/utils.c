@@ -3,6 +3,12 @@
 
 #include "../header_files/utils.h"
 
+/**
+ * @brief Get the size of a string
+ * 
+ * @param str string
+ * @return int size
+ */
 int len(char* str) {
   int i=0;
 
@@ -14,6 +20,12 @@ int len(char* str) {
   return i;
 }
 
+/**
+ * @brief Convert an integer to a string representation
+ * 
+ * @param num integer
+ * @return char* string representation
+ */
 char* int_to_char(int num) {
   int i = 0;
 
@@ -48,6 +60,12 @@ char* int_to_char(int num) {
   return str;
 }
 
+/**
+ * @brief Convert a string to an integer
+ * 
+ * @param str string
+ * @return int integer
+ */
 int char_to_int(char* str) {
   int result = 0;
 
@@ -59,6 +77,12 @@ int char_to_int(char* str) {
   return result;
 }
 
+/**
+ * @brief String constructor function
+ * 
+ * @param data string
+ * @return string 
+ */
 char* constructor_char(char* data) {
   int n = len(data);
 
@@ -70,6 +94,11 @@ char* constructor_char(char* data) {
   return p;
 }
 
+/**
+ * @brief String destructor function
+ * 
+ * @param data string
+ */
 void destructor_char(char* data) {
   free(data);
 }

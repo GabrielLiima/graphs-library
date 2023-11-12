@@ -6,6 +6,14 @@
 #include "../header_files/utils.h"
 #include "../header_files/output.h"
 
+/**
+ * @brief Read a graph from a text file and save it in either an
+ * adjascent matrix or an adjascent list
+ * 
+ * @param filename name of the text file to be read
+ * @param graph pointer to a graph object
+ * @param option either 1 or 2: 1-adjascent matrix; 2-adjascent list
+ */
 void read_graph(char* filename, Graph* graph, int option) {
   FILE *file = fopen(filename, "r");
 
