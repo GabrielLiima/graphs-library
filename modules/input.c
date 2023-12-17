@@ -14,7 +14,7 @@
  * @param graph pointer to a graph object
  * @param option either 1 or 2: 1-adjascent matrix; 2-adjascent list
  */
-void read_graph(char* filename, Graph* graph, int option) {
+void read_graph(char* filename, Graph* graph, int option, int has_weight) {
   FILE *file = fopen(filename, "r");
 
   if(file == NULL) {
@@ -33,9 +33,10 @@ void read_graph(char* filename, Graph* graph, int option) {
   }
 
   int e1, e2;
+  int w;
   int m = 0;
 
-  if(option == 1) {
+  if(option == 1 && has_weight == 0) {
     char** adj_matrix = (char**)calloc(n, sizeof(char*));
 
     for(int i=0; i<n; i++) {
@@ -59,19 +60,38 @@ void read_graph(char* filename, Graph* graph, int option) {
       adj_list[i] = create_list(constructor_char, destructor_char);
     }  
 
-    while(fscanf(file, "%d %d", &e1, &e2) != EOF) {
-      char* aux = int_to_char(e2);
-      char* aux2 = int_to_char(e1);
+    if(has_weight) {
 
-      if(!is_in_list(adj_list[e1-1], aux)) {
-        append(adj_list[e1-1], aux);
-        append(adj_list[e2-1], aux2);  
+      while(fscanf(file, "%d %d %d", &e1, &e2, &w) != EOF) {
+        char* aux = int_to_char(e2);
+        char* aux2 = int_to_char(e1);
+
+        if(!is_in_list(adj_list[e1-1], aux)) {
+          append(adj_list[e1-1], aux, w);
+          append(adj_list[e2-1], aux2, w);  
+        }
+
+        free(aux);
+        free(aux2);
+        
+        m++;
       }
 
-      free(aux);
-      free(aux2);
-      
-      m++;
+    } else {
+      while(fscanf(file, "%d %d", &e1, &e2) != EOF) {
+        char* aux = int_to_char(e2);
+        char* aux2 = int_to_char(e1);
+
+        if(!is_in_list(adj_list[e1-1], aux)) {
+          append(adj_list[e1-1], aux, 1.0);
+          append(adj_list[e2-1], aux2, 1.0);  
+        }
+
+        free(aux);
+        free(aux2);
+        
+        m++;
+      }
     }
 
     graph->adj_list = adj_list;

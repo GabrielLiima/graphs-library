@@ -10,6 +10,6 @@ typedef struct Graph {
   int m;
 } Graph;
 
-void read_graph(char* filename, Graph* graph, int option);
+void read_graph(char* filename, Graph* graph, int option, int has_weight);
 
 #endif

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "../header_files/output.h"
+#include "../header_files/utils.h"
 
 /**
  * @brief Get the vertex degrees from adjascent matrix
@@ -128,4 +129,19 @@ void print_adj_list(List** adj_list, int n) {
 
     print_list(adj_list[i]->head);
   }
+}
+
+void generate_path(char** parent, char** height, int start, int end, int option) {
+  FILE *file = fopen("./outputs/output_bfs.txt", "w");
+
+  if(file == NULL) {
+    printf("Error creating output file.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  for(int i=end-1; i != start-1; i = char_to_int(parent[i])-1) {
+    fprintf(file, "%d <- %s (%s)\n", i+1, parent[i], height[i]);
+  }
+
+  fclose(file);
 }

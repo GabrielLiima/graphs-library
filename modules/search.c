@@ -13,12 +13,12 @@
  * @param start starting vertex
  * @param search_type either 1 or 2: 1-bfs; 2-dfs
  */
-static void search_helper(Graph* graph, SearchInfo* search_info, int start, int search_type) {
+static void search_helper(Graph* graph, SearchInfo* search_info, int start, int end, int search_type) {
   search_info->visited[start-1] = '1';
 
   char* start_char = int_to_char(start);
 
-  append(search_info->queue, start_char);
+  append(search_info->queue, start_char, 0.0);
 
   free(start_char);
 
@@ -40,13 +40,18 @@ static void search_helper(Graph* graph, SearchInfo* search_info, int start, int 
           search_info->height[i-1] = int_to_char(cur_height);
 
           if(search_type == 1) {
+            if(cur_vertex_int == end) {
+              search_info->queue->size = 0;
+              break;
+            }
+
             char* i_char = int_to_char(i);
-            append(search_info->queue, i_char);
+            append(search_info->queue, i_char, 0.0);
 
             free(i_char);
 
           } else if(search_type == 2) {
-            search_helper(graph, search_info, i, 2);
+            search_helper(graph, search_info, i, end, 2);
           }
         }
       }
@@ -55,7 +60,6 @@ static void search_helper(Graph* graph, SearchInfo* search_info, int start, int 
       Node* cur = graph->adj_list[cur_vertex_int-1]->head;
 
       while(cur != NULL) {
-
         if(search_info->visited[char_to_int(cur->data)-1] != '1') {
           search_info->visited[char_to_int(cur->data)-1] = '1';
           search_info->parent[char_to_int(cur->data)-1] = constructor_char(cur_vertex_char);
@@ -64,13 +68,18 @@ static void search_helper(Graph* graph, SearchInfo* search_info, int start, int 
           search_info->height[char_to_int(cur->data)-1] = int_to_char(cur_height);
 
           if(search_type == 1) {
+            if(cur_vertex_int == end) {
+              search_info->queue->size = 0;
+              break;
+            }
+
             char* i_char = int_to_char(char_to_int(cur->data));
-            append(search_info->queue, i_char);
+            append(search_info->queue, i_char, 0.0);
 
             free(i_char);
 
           } else if(search_type == 2) {
-            search_helper(graph, search_info, char_to_int(cur->data), 2);
+            search_helper(graph, search_info, char_to_int(cur->data), end, 2);
           }
         }
         cur = cur->next;
@@ -87,7 +96,7 @@ static void search_helper(Graph* graph, SearchInfo* search_info, int start, int 
  * @param start starting vertex
  * @param option either 1 or 2: 1-bfs; 2-dfs
  */
-void search(Graph* graph, int start, int option) {
+void search(Graph* graph, int start, int end, int option) {
   if(graph->n == 0) {
     return;
   }
@@ -102,12 +111,12 @@ void search(Graph* graph, int start, int option) {
   search_info.height[start-1] = constructor_char("0\0");
 
   if(option == 1) {
-    search_helper(graph, &search_info, start, 1);
-    generate_search_output((&search_info)->parent, (&search_info)->height, graph->n, 1);
+    search_helper(graph, &search_info, start, end, 1);
+    generate_search_output((&search_info)->parent, (&search_info)->height, end, 1);
 
   } else if(option == 2) {
-    search_helper(graph, &search_info, start, 2);
-    generate_search_output((&search_info)->parent, (&search_info)->height, graph->n, 2);
+    search_helper(graph, &search_info, start, end, 2);
+    generate_search_output((&search_info)->parent, (&search_info)->height, end, 2);
   }
 
   delete_list(search_info.queue);
@@ -148,7 +157,7 @@ void find_connected_components(Graph* graph) {
       search_info.visited[i-1] = '1';
 
       char* start_char = int_to_char(i);
-      append(search_info.queue, start_char);
+      append(search_info.queue, start_char, 0.0);
       free(start_char);
 
       while(search_info.queue->size != 0) {
@@ -165,7 +174,7 @@ void find_connected_components(Graph* graph) {
               search_info.visited[i-1] = '1';
 
               char* i_char = int_to_char(i);
-              append(search_info.queue, i_char);
+              append(search_info.queue, i_char, 0.0);
 
               free(i_char);
 
@@ -182,7 +191,7 @@ void find_connected_components(Graph* graph) {
               search_info.visited[char_to_int(cur->data)-1] = '1';
               
               char* i_char = int_to_char(char_to_int(cur->data));
-              append(search_info.queue, i_char);
+              append(search_info.queue, i_char, 0.0);
 
               free(i_char);
 
@@ -213,4 +222,57 @@ void find_connected_components(Graph* graph) {
   }
 
   free(sizes);
+}
+
+void find_path(Graph* graph, int start, int end) {
+  SearchInfo search_info;
+
+  search_info.parent = (char**)calloc(graph->n, sizeof(char*));
+  search_info.height = (char**)calloc(graph->n, sizeof(char*));
+  search_info.visited = (char*)calloc(graph->n, sizeof(char));
+  search_info.queue = create_list(constructor_char, destructor_char);
+
+  search_info.height[start-1] = constructor_char("0\0");
+
+  search_helper(graph, &search_info, start, end, 1);
+  generate_path((&search_info)->parent, (&search_info)->height, start, end, 1);
+
+  delete_list(search_info.queue);
+  free(search_info.visited);
+
+  for(int i=0; i<graph->n; i++) {
+    free(search_info.parent[i]);
+    free(search_info.height[i]);
+  }
+
+  free(search_info.parent);
+  free(search_info.height);
+}
+
+static void calculate_neighbor_distances(int cur_vertex, List* list, SearchInfo* search_info) {
+  Node* cur = list->head;
+
+  if(!search_info->visited[char_to_int(cur->data)-1] && 
+    (char_to_int(search_info->distance[cur_vertex]) + cur->weight) < char_to_int(search_info->distance[char_to_int(cur->data)-1])) 
+    {
+      search_info->distance[char_to_int(cur->data)-1] = int_to_char(char_to_int(search_info->distance[cur_vertex]) + cur->weight);
+    }
+}
+
+void dijkstra(Graph* graph, int start, int end) {
+  SearchInfo search_info;
+
+  search_info.parent = (char**)calloc(graph->n, sizeof(char*));
+  search_info.visited = (char*)calloc(graph->n, sizeof(char));
+  search_info.distance = (char**)calloc(graph->n, sizeof(char*));
+
+  search_info.distance[start-1] = int_to_char(0);
+
+  // while(1) {
+  //   if(search_info.distance[end-1] == '1') {
+  //     break;
+  //   }
+
+  calculate_neighbor_distances(start, graph->adj_list[start-1], &search_info);
+  // }
 }

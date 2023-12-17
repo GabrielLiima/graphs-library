@@ -11,10 +11,11 @@
  * @param constructor string constructor function 
  * @return Node* pointer to the node object
  */
-static Node* createNode(char* data, constructor_fn constructor) {
+static Node* createNode(char* data, int weight, constructor_fn constructor) {
   Node* new_node = malloc(sizeof(Node));
 
   new_node->data = constructor(data);
+  new_node->weight = weight;
   new_node->next = NULL;
 
   return new_node;
@@ -52,8 +53,8 @@ List* create_list(constructor_fn constructor, destructor_fn destructor) {
  * @param l pointer to a list object
  * @param data string to be appended
  */
-void append(List* l, char* data) {
-  Node* new_node = createNode(data, l->constructor);
+void append(List* l, char* data, int weight) {
+  Node* new_node = createNode(data, weight, l->constructor);
 
   if(l->size == 0) {
     l->head = new_node;
@@ -73,10 +74,13 @@ void append(List* l, char* data) {
  */
 void print_list(Node* n) {
   char* data = NULL;
+  int weight = 0;
 
   while(n != NULL) {
     data = n->data;
-    printf("%s ", data);
+    weight = n->weight;
+
+    printf("%s (%d) ", data, weight);
     
     n = n->next;
   }
