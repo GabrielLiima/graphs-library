@@ -131,16 +131,32 @@ void print_adj_list(List** adj_list, int n) {
   }
 }
 
-void generate_path(char** parent, char** height, int start, int end, int option) {
-  FILE *file = fopen("./outputs/output_bfs.txt", "w");
+/**
+ * @brief Generate a text file with the searched path
+ * 
+ * @param search_info search info object
+ * @param start starting node
+ * @param end end node
+ * @param has_weight boolean
+ */
+void generate_path(SearchInfo* search_info, int start, int end, int has_weight) {
+  FILE *file = fopen("./outputs/output_path.txt", "w");
 
   if(file == NULL) {
     printf("Error creating output file.\n");
     exit(EXIT_FAILURE);
   }
 
-  for(int i=end-1; i != start-1; i = char_to_int(parent[i])-1) {
-    fprintf(file, "%d <- %s (%s)\n", i+1, parent[i], height[i]);
+  if(has_weight) {
+
+    for(int i=end-1; i != start-1; i = char_to_int(search_info->parent[i])-1) {
+      fprintf(file, "%d <- %s (%s)\n", i+1, search_info->parent[i], search_info->distance[i]);
+    }
+
+  } else {
+    for(int i=end-1; i != start-1; i = char_to_int(search_info->parent[i])-1) {
+      fprintf(file, "%d <- %s (%s)\n", i+1, search_info->parent[i], search_info->height[i]);
+    }
   }
 
   fclose(file);

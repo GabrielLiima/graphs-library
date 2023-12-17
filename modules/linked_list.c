@@ -52,6 +52,7 @@ List* create_list(constructor_fn constructor, destructor_fn destructor) {
  * 
  * @param l pointer to a list object
  * @param data string to be appended
+ * @param weight weight of the node
  */
 void append(List* l, char* data, int weight) {
   Node* new_node = createNode(data, weight, l->constructor);
@@ -104,6 +105,76 @@ void delete_head(List* l) {
 
   deleteNode(aux, l->destructor);
   l->size--;
+}
+
+/**
+ * @brief Delete the list tail
+ * 
+ * @param l pointer to a list object
+ */
+void deleteTail(List* l) {
+  Node* aux = l->tail;
+
+  if(l->size == 1) {
+    l->head = NULL;
+    l->tail = NULL;
+
+  } else {
+    Node* it = l->head;
+
+    while(it->next != l->tail) {
+      it = it->next;
+    }
+
+    it->next = NULL;
+    l->tail = it;
+  }
+
+  deleteNode(aux, l->destructor);
+  l->size--;
+}
+
+/**
+ * @brief Delete an specific node
+ * 
+ * @param l pointer to a list object
+ * @param n node to be deleted
+ */
+void delete(List* l, char* n) {
+  Node* cur = l->head;
+
+  int i=0;
+
+  while(cur != NULL) {
+    
+    if(strcmp(cur->data, n) == 0) {
+      break;
+    }
+
+    i++;
+    cur = cur->next;
+  }
+
+  if(l->head == cur) {
+    delete_head(l);
+
+  } else if(l->tail == cur) {
+    deleteTail(l);
+
+  } else {
+    cur = l->head;
+
+    for(int j=0; j<i-1; j++) {
+      cur = cur->next;
+    }
+
+    Node* aux = cur->next;
+    cur->next = aux->next;
+
+    deleteNode(aux, l->destructor);
+    l->size--;
+  }
+  
 }
 
 /**

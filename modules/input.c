@@ -13,6 +13,7 @@
  * @param filename name of the text file to be read
  * @param graph pointer to a graph object
  * @param option either 1 or 2: 1-adjascent matrix; 2-adjascent list
+ * @param has_weight boolean 
  */
 void read_graph(char* filename, Graph* graph, int option, int has_weight) {
   FILE *file = fopen(filename, "r");

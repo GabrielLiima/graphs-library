@@ -21,10 +21,11 @@ int main(int argc, char *argv[]) {
 
   // find_connected_components(&graph);
   
-  // Find path
-  // find_path(&graph, 34, 80);
+  // Find path (no weights)
+  // find_path(&graph, 1, 4);
 
-  dijkstra(&graph, 1, 5);
+  // Find path (weights)
+  // dijkstra(&graph, 1, 54);
 
   // Only when using adjascent list
   for(int i=0; i<graph.n; i++) {
